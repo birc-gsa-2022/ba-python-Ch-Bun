@@ -36,6 +36,12 @@ def strict_border_array(x: str) -> list[int]:
     for i in range(len(x)-1):
         if (ba[i] != 0 and x[ba[i]] != x[i+1]):
             bax[i] = ba[i]
+        #Search for shorter border
+        elif(ba[i] != 0 and x[ba[i]] == x[i+1]):
+            for j in range(1,ba[i]):
+                if (x[ba[i]-j] != x[i+1] and x[0:ba[i]-j]==x[i-ba[i]+j+1: i+1]):
+                    bax[i] = ba[i]-j
+                    break
         else:
             bax[i] = 0
     bax[len(x)-1] = ba[len(x)-1]
@@ -46,6 +52,8 @@ def main():
     #Test
     print(border_array("aaba"))
     #[0, 1, 0, 1]
+    print(border_array("abaabaa"))
+    #[0,0,1,1,2,3,4]
     print(border_array("ississippi"))
     #[0, 0, 0, 1, 2, 3, 4, 0, 0, 1]
     print(border_array(""))
@@ -55,6 +63,8 @@ def main():
     #[0, 1, 0, 1]
     print(strict_border_array("aaaba"))
     #[0, 0, 2, 0, 1]
+    print(strict_border_array("abaabaa"))
+    #[0,0,1,0,0,1,4]
     print(strict_border_array("ississippi"))
     #[0, 0, 0, 0, 0, 0, 4, 0, 0, 1]
     print(strict_border_array(""))
