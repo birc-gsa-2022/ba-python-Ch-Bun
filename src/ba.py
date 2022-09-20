@@ -24,27 +24,41 @@ def border_array(x: str) -> list[int]:
 
 
 def strict_border_array(x: str) -> list[int]:
-    #edge case
-    if x == "":
-        return []
+    # #edge case
+    # if x == "":
+    #     return []
         
-    ba = border_array(x)
-    #built border array
-    bax = [0]*len(x)
+    # ba = border_array(x)
+    # #built border array
+    # bax = [0]*len(x)
     
-    #otherwise run trough seq
-    for i in range(len(x)-1):
-        if (ba[i] != 0 and x[ba[i]] != x[i+1]):
-            bax[i] = ba[i]
-        #Search for shorter border
-        elif(ba[i] != 0 and x[ba[i]] == x[i+1]):
-            for j in range(1,ba[i]):
-                if (x[ba[i]-j] != x[i+1] and x[0:ba[i]-j]==x[i-ba[i]+j+1: i+1]):
-                    bax[i] = ba[i]-j
-                    break
+    # #otherwise run trough seq
+    # for i in range(len(x)-1):
+    #     if (ba[i] != 0 and x[ba[i]] != x[i+1]):
+    #         bax[i] = ba[i]
+    #     #Search for shorter border
+    #     elif(ba[i] != 0 and x[ba[i]] == x[i+1]):
+    #         for j in range(1,ba[i]):
+    #             if (x[ba[i]-j] != x[i+1] and x[0:ba[i]-j]==x[i-ba[i]+j+1: i+1]):
+    #                 bax[i] = ba[i]-j
+    #                 break
+    #     else:
+    #         bax[i] = 0
+    # bax[len(x)-1] = ba[len(x)-1]
+    # return bax
+
+
+    ba = border_array(x)
+    bax = []
+    for i, bai in enumerate(ba):
+        if bai == 0:
+            bax.append(0)
+        elif i == (len(x)-1) or x[i+1] != x[bai]:
+            bax.append(bai)
+        #longest border not strict -> so we search down the borders 
+        # if longest wasn't stikt we checck the shorter where we already know that it is not extendable
         else:
-            bax[i] = 0
-    bax[len(x)-1] = ba[len(x)-1]
+            bax.append(bax[bai-1])
     return bax
 
 def main():
